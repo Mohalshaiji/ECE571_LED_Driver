@@ -2,6 +2,7 @@
 package led_driver_pkg;
     parameter ADDR_BITS = 3;
     parameter DATA_BITS = 8;
+    parameter I2C_ADDR_BITS = 7; 
     
     // Enumeration for the function of each register
     typedef enum logic [ADDR_BITS-1:0] { 
@@ -42,6 +43,13 @@ package led_driver_pkg;
     } reg_led_out_t;
 
 endpackage
+    // Enumeration of I2C control states
+    typedef enum logic [1:0] {
+        CTRL_IDLE,
+        CTRL_ADDR,
+        CTRL_REG,
+        CTRL_DATA
+    } ctrl_state_t;
 
 // Interface to connect the LED & I2C control modules
 interface bus_if (input logic clk);

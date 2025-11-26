@@ -42,7 +42,6 @@ package led_driver_pkg;
         led_out_enum_t LED0;
     } reg_led_out_t;
 
-endpackage
     // Enumeration of I2C control states
     typedef enum logic [1:0] {
         CTRL_IDLE,
@@ -50,6 +49,8 @@ endpackage
         CTRL_REG,
         CTRL_DATA
     } ctrl_state_t;
+
+endpackage
 
 // Interface to connect the LED & I2C control modules
 interface bus_if (input logic clk);

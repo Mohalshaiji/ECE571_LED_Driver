@@ -1,4 +1,3 @@
-
 // Module for the simulated oscillator
 module oscillator_400K(
     global_if glb, 

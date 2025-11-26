@@ -55,4 +55,4 @@ interface bus_if (input logic clk);
 endinterface
 
 // Global interface containing the reset and sleep signals (Should be used in every module!!)
-interface global_if(input logic reset, sleep); endinterface
+interface global_if(input logic reset, input logic sleep); endinterface

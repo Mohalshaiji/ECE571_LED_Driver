@@ -18,9 +18,13 @@ task test();
     divisor = 8'h00;
     #1000 divisor = 8'h01;
     #1000 divisor = 8'h02;
+    #1000 divisor = 8'h03;
+    #1000 divisor = 8'h04;
+    #1000 divisor = 8'h05;
     #1000 divisor = 8'h10;
     #1000 divisor = 8'h80;
     #1000 divisor = 8'hC5;
+    #1000 divisor = 8'hFF;
 endtask
 
 initial begin

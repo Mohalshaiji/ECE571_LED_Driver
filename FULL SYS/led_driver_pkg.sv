@@ -59,8 +59,8 @@ interface bus_if (input logic clk);
     logic [ADDR_BITS-1:0] addr;
     logic r_en, w_en;
 
-    modport i2c_ctrl(output addr, r_en, w_en, inout data);
-    modport led_ctrl(input addr, r_en, w_en, inout data);
+    modport i2c_ctrl(output addr, r_en, w_en, inout data, input clk);
+    modport led_ctrl(input addr, r_en, w_en, inout data, input clk);
 endinterface
 
 // Global interface containing the reset and sleep signals (Should be used in every module!!)

@@ -42,7 +42,7 @@ module led_mode_select (
             2'b00: select_mode = 1'b0;         // OFF
             2'b01: select_mode = 1'b1;         // ON
             2'b10: select_mode = pwm_indiv;    // individual PWM
-            2'b11: select_mode = grp;          // group output
+            2'b11: select_mode = grp & pwm_indiv; // group output overlayed with individual brightness
             default: select_mode = 1'b0;
         endcase
     endfunction

@@ -11,7 +11,8 @@ import time
 # ------------------------------------------------------
 VCD_PATH = "wave.vcd"
 LED_SIGNAL = "led_controller_tb.LEDS[3:0]"
-FPS = 60                                     # GUI frames per second
+FPS = 50        # GUI frames per second
+SPEED = 0.25     # 1.0 ~= realtime (just a bit slower)
 # ------------------------------------------------------
 
 # Utility ------------------------------------------------
@@ -69,7 +70,7 @@ vcd = VCDVCD(VCD_PATH)
 tv = vcd[LED_SIGNAL].tv
 
 # Total simulation time (ps)
-SIM_END = tv[-1][0]
+SIM_END = vcd.endtime
 
 # ------------------------------------------------------
 # GUI
@@ -145,7 +146,7 @@ def update_leds():
 
     if playing:
         # Compute brightness for each LED
-        window = int(1000 / FPS)*1_000_000_000  # integration window
+        window = int(1000 / FPS)*1_000_000_000*SPEED  # integration window
         for i in range(4):
             b = duty_cycle_window(tv, current_time, window, i)
             leds[i].set_brightness(b)
@@ -154,7 +155,7 @@ def update_leds():
         time_label.config(text=f"Time: {current_time/1_000_000_000:.2f} ms")
 
         # Advance time if playing
-        dt = (1e12 / FPS)      # ps/frame
+        dt = (1e12 / FPS) * SPEED      # ps/frame
         current_time += dt
 
     # Schedule next frame

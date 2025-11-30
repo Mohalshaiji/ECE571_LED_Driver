@@ -97,4 +97,10 @@ initial begin
     join
 end
 
+// Save the output file
+initial begin
+    $dumpfile("wave.vcd");
+    $dumpvars(0, led_controller_tb);
+end
+
 endmodule

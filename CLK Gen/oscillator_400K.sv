@@ -13,11 +13,11 @@ parameter real PERIOD = 2500.0; // In nanoseconds
 initial clk_400K = 0;
 
 always begin
-    if (!glb.sleep)
+    if (!glb.reset)
         #(PERIOD/2) clk_400K = ~clk_400K;
     else begin
         clk_400K = 0;
-        @(negedge glb.sleep);
+        @(negedge glb.reset);
     end
 end
 

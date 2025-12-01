@@ -5,20 +5,31 @@ module led_driver(
     inout wire  sda,
     output logic [3:0] leds
 );
+    // Intermediate Connections  
+    logic       sleep;      // Sleep bit from MODE register (bit 4)
+    logic       clk_osc;    // internal 400 kHz clock for LED timing
 
-// Power-on-Reset
+    // Interfaces
+    global_if   glb(.reset, .sleep);    // Global signal interface for sleep and reset
+    bus_if      bus(.clk(clk_osc));     // Data bus between I2C controller & LED controller
 
-// oscillator
-    logic clk_osc;  // internal 400 kHz clock for LED timing
+    // Power-on-Reset
 
-    // oscillator module
+    //-- Oscillator --
     oscillator_400K u_osc (
-        .glb      (glb),
-        .clk_400K (clk_osc)
+        .glb        (glb),
+        .clk_400K   (clk_osc)
     );
 
-// led_controller
-    
+    //-- LED Controller --
+    led_controller u_led_ctrl(
+        .leds       (leds),
+        .sleep      (sleep),
+        .clk_400K   (clk_osc),
+        .bus        (bus.led_ctrl),
+        .glb        (glb)
+    );
+
     // From I2C bus interface → I2C controller
     logic  [7:0] i2c_byte;       // received I2C byte
     logic        i2c_byte_valid; // pulse when a new byte is available
@@ -30,9 +41,8 @@ module led_driver(
     logic       reg_write;       // write strobe
     logic       reg_read;        // read strobe
 
-    // Sleep bit from MODE register (bit 4)
-    logic       sleep;
 
-// i2c instantiation
+
+    //-- I2C --
 
 endmodule

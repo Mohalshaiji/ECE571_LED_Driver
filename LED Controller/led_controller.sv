@@ -3,6 +3,7 @@ import led_driver_pkg::*;
 // LED Controller Module
 module led_controller(
     output logic [3:0] leds,
+    output logic sleep,
     input clk_400K,
     bus_if.led_ctrl bus,
     global_if glb
@@ -38,7 +39,7 @@ assign bus.data = bus.r_en ? read_data : 'z;
 //-- Instantiate PWM control modules:
 
 // Declare intermediate variables
-logic clk_6p25K;
+logic clk_6p25K, led_clk_400K;
 logic grp_pwm_signal;
 logic [3:0] indiv_pwm_signal;
 reg_mode_t reg_mode;
@@ -46,13 +47,19 @@ reg_led_out_t reg_led_out;
 assign reg_mode = reg_mode_t'(register_file[REG_MODE]);
 assign reg_led_out = reg_led_out_t'(register_file[REG_LEDOUT]);
 
+// Assign sleep output signal from the mode register
+assign sleep = reg_mode.sleep;
+
+// Turn clock off if asleep
+assign led_clk_400K = glb.sleep ? 0 : clk_400K;
+
 // Instantiate clock divider to create 6.25KHz signal
-clock_divider #(6) clk_6p25K_m(.clk_in(clk_400K), .glb, .clk_out(clk_6p25K)); // Divide by 64 for 6.25KHz
+clock_divider #(6) clk_6p25K_m(.clk_in(led_clk_400K), .glb, .clk_out(clk_6p25K)); // Divide by 64 for 6.25KHz
 
 // Instantiate Group PWM Block (outputs PWM signal to use when an LED is in group mode)
 group_pwm group_pwm_m(
     .grp_pwm_signal, 
-    .clk_400K, 
+    .clk_400K(led_clk_400K), 
     .clk_6p25K, 
     .dim_blink(reg_mode.dim_blink), 
     .grp_pwm_reg(register_file[REG_GRPPWM]),
@@ -62,7 +69,7 @@ group_pwm group_pwm_m(
 
 // Instantiate Individual PWM Block (outputs PWM signals to use when an LED is in individual mode)
 individual_pwm_block indiv_pwm_m(
-    .clk_pwm(clk_400K),
+    .clk_pwm(led_clk_400K),
     .rst_n(~glb.reset),
     .sleep(glb.sleep),
     .pwm0_reg(register_file[REG_PWM0]),

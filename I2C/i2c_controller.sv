@@ -7,11 +7,19 @@ module i2c_controller #(
     input  logic          clk,               // System clock
     global_if             g_if,              // Global reset and sleep interface
     bus_if.i2c_ctrl       bus,               // Shared register bus (controller modport)
-    input  logic          start,             // Start of I2C transaction
-    input  logic          stop,              // End of I2C transaction
-    input  logic          rx_valid,          // New byte available from bus interface
-    input  logic [7:0]    rx_data,           // Received byte (addr/reg/data)
-    output logic          transaction_done   // High after a completed write
+
+    // From Liukee's bit-level interface
+    input  logic          start,             // Start condition detected
+    input  logic          stop,              // Stop condition detected
+    input  logic          rx_valid,          // New byte available from bit-level interface
+    input  logic [7:0]    rx_data,           // Received byte (addr/reg or write data)
+
+    // To Liukee's bit-level interface (for reads)
+    output logic [7:0]    tx_data,           // Byte to send to I2C master
+    output logic          tx_req,            // Pulse: request to send tx_data
+    input  logic          tx_ready,          // High when bit-level TX is idle
+
+    output logic          transaction_done   // High after a completed write or read
 );
 
     ctrl_state_t                    state;            // Controller state
@@ -20,9 +28,9 @@ module i2c_controller #(
     logic [ADDR_BITS-1:0]           reg_addr_ptr;     // Latched register address
     logic                           addr_match;       // Address match flag
     logic [DATA_BITS-1:0]           data_drive;       // Local driver for bus.data
+    logic                           read_phase;       // Two-phase read control
 
-    // Drive the shared data bus only during writes
-    assign bus.data = (bus.w_en) ? data_drive : 'hz;
+    assign bus.data = (bus.w_en) ? data_drive : 'hz; // Drive bus only during writes
 
     always_ff @(posedge clk) begin
         if (g_if.reset) begin
@@ -35,13 +43,18 @@ module i2c_controller #(
             bus.w_en          <= 1'b0;
             bus.r_en          <= 1'b0;
             data_drive        <= '0;
+            tx_data           <= 8'h00;
+            tx_req            <= 1'b0;
             transaction_done  <= 1'b0;
+            read_phase        <= 1'b0;
         end else begin
             bus.w_en         <= 1'b0;
             bus.r_en         <= 1'b0;
+            tx_req           <= 1'b0;
 
             if (start) begin
                 transaction_done <= 1'b0;
+                read_phase       <= 1'b0;
             end
 
             unique case (state)
@@ -58,6 +71,11 @@ module i2c_controller #(
                         rw_bit           <= rx_data[0];
                         addr_match       <= (rx_data[7:1] == DEVICE_ADDR);
                         state            <= CTRL_REG;
+                        read_phase       <= 1'b0;
+                    end
+                    if (stop) begin
+                        state      <= CTRL_IDLE;
+                        read_phase <= 1'b0;
                     end
                 end
 
@@ -65,29 +83,57 @@ module i2c_controller #(
                     if (rx_valid) begin
                         reg_addr_ptr <= rx_data[ADDR_BITS-1:0];
                         state        <= CTRL_DATA;
+                        read_phase   <= 1'b0;
                     end
                     if (stop) begin
-                        state <= CTRL_IDLE;
+                        state      <= CTRL_IDLE;
+                        read_phase <= 1'b0;
                     end
                 end
 
                 CTRL_DATA: begin
-                    if (rx_valid) begin
-                        if (addr_match && (rw_bit == 1'b0) && !g_if.sleep) begin
-                            bus.addr    <= reg_addr_ptr;
-                            data_drive  <= rx_data;
-                            bus.w_en    <= 1'b1;
-                            transaction_done <= 1'b1;
+                    if (rw_bit == 1'b0) begin
+                        // Write transaction
+                        if (rx_valid) begin
+                            if (addr_match && !g_if.sleep) begin
+                                bus.addr          <= reg_addr_ptr;
+                                data_drive        <= rx_data;
+                                bus.w_en          <= 1'b1;
+                                transaction_done  <= 1'b1;
+                            end
+                            state      <= CTRL_IDLE;
+                            read_phase <= 1'b0;
                         end
-                        state <= CTRL_IDLE;
+                    end else begin
+                        // Read transaction (two-phase to allow bus.data to settle)
+                        if (addr_match && !g_if.sleep) begin
+                            bus.addr <= reg_addr_ptr;
+                            bus.r_en <= 1'b1;
+                            if (!read_phase) begin
+                                read_phase <= 1'b1;
+                            end else begin
+                                if (tx_ready) begin
+                                    tx_data          <= bus.data;
+                                    tx_req           <= 1'b1;
+                                    transaction_done <= 1'b1;
+                                    state            <= CTRL_IDLE;
+                                    read_phase       <= 1'b0;
+                                end
+                            end
+                        end else begin
+                            state      <= CTRL_IDLE;
+                            read_phase <= 1'b0;
+                        end
                     end
                     if (stop) begin
-                        state <= CTRL_IDLE;
+                        state      <= CTRL_IDLE;
+                        read_phase <= 1'b0;
                     end
                 end
 
                 default: begin
-                    state <= CTRL_IDLE;
+                    state      <= CTRL_IDLE;
+                    read_phase <= 1'b0;
                 end
             endcase
         end

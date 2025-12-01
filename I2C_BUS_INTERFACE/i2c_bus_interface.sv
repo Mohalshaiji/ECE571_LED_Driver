@@ -11,13 +11,13 @@ module i2c_bus_interface (
 	// Receive interface to I2C controller(to Mohammad's controller)
 	output logic [7:0] rx_data,  // Received byte
 	output logic rx_valid, // Pulse when byte is ready
-        output logic start_o,
-        output logic stop_o,
+    output logic start_o,
+    output logic stop_o,
 
 	// Transmit interface (from controller)
 	input  logic [7:0] tx_data,  // Byte to send
 	input  logic tx_req,   // Pulse: request to send
-    	output logic tx_ready  // Ready for next byte
+    output logic tx_ready  // Ready for next byte
 );	
 //Edge detection(synchronized)
 	logic scl_prev, sda_prev;

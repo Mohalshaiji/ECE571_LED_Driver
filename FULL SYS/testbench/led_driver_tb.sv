@@ -57,23 +57,7 @@ task write_reg(input reg_enum_t a, input logic [DATA_BITS-1:0] d);
 endtask
 
 // Task for reading a register in the LED controller
-task read_reg(input reg_enum_t a);
-    logic [7:0] reg_addr;
-    logic [7:0] data_read;
-
-    reg_addr = logic'(a);
-
-    // Standard I2C register read sequence:
-    // 1) START + [slave address + W] + [register address]
-    // 2) repeated START + [slave address + R] + read data
-
-    i2c_start();
-    i2c_write_byte({SLAVE_ADDR, 1'b0});  // write mode
-    i2c_write_byte(reg_addr);            // register address
-
-    i2c_start();                         // repeated START
-    i2c_write_byte({SLAVE_ADDR, 1'b1});  // read mode
-    i2c_read_byte(data_read);            // read one byte from I2C bus
+// TO DO
     i2c_stop();
     
     $display("[Read]\t%s\t\tDATA=%b", a.name(), reg_addr, data_read); // display result

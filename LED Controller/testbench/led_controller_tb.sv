@@ -26,6 +26,7 @@ assign BUS.data = (BUS.w_en) ? data_out : 'z;
 // Instantiate DUT
 led_controller DUT(
     .leds(LEDS),
+    .sleep(sleep),
     .clk_400K(CLK_400K),
     .bus(BUS.led_ctrl),
     .glb(GLB)
@@ -131,12 +132,11 @@ endtask
 
 // Test sleep
 task test_sleep();
-    //TODO: sleep by writing to mode register instead!
     $display("\n-- Sleep --");
     write_reg(REG_LEDOUT, 8'hAA);       // Turn LEDs to individual mode
-    sleep = 1;
+    write_reg(REG_MODE, 8'h10);         // Set SLEEP bit
     #1s;
-    sleep = 0;
+    write_reg(REG_MODE, 8'h10);         // Clear SLEEP bit
     #1s;
 endtask
 
@@ -187,7 +187,7 @@ endtask
 initial begin
     // Zero everything out
     CLK_400K = 0;
-    sleep = 0; reset = 0;
+    reset = 0;
     BUS.addr = 0; data_out = 0; BUS.w_en = 0; BUS.r_en = 0;
 
     reset_dut(); // Reset before starting

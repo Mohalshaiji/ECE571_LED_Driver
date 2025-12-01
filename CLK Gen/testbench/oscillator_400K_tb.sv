@@ -13,11 +13,11 @@ global_if glb(.reset, .sleep);
 oscillator_400K DUT(.glb, .clk_400K);
 
 initial begin
-    sleep = 0;
+    reset = 0;
     #100;
-    sleep = 1;
+    reset = 1;
     #100;
-    sleep = 0;
+    reset = 0;
     #100;
     $finish();
 end

@@ -9,7 +9,6 @@ module led_driver(
 // Power-on-Reset
 
 // oscillator
-// Main Module
 module led_driver(
     input logic reset,
     input logic scl,

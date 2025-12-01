@@ -9,16 +9,6 @@ module led_driver(
 // Power-on-Reset
 
 // oscillator
-module led_driver(
-    input logic reset,
-    input logic scl,
-    inout wire  sda,
-    output logic [3:0] leds
-);
-
-// Power-on-Reset
-
-// oscillator
     logic clk_osc;  // internal 400 kHz clock for LED timing
 
     // oscillator module
@@ -31,7 +21,7 @@ module led_driver(
     
     // From I2C bus interface → I2C controller
     logic  [7:0] i2c_byte;       // received I2C byte
-    logic        i2c_byte_valid; // pulse when new byte is available
+    logic        i2c_byte_valid; // pulse when a new byte is available
 
     // Register interface between I2C controller and LED controller
     logic [2:0] reg_addr;        // 3-bit address (0x0–0x7)

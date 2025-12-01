@@ -32,7 +32,8 @@ buffer_lock = threading.Lock()
 worker_busy = False
 
 def parse_bus_value(val):
-    if not len(val) == 4: return "0000"
+    if not len(val) == 4:
+        val = (4-len(val))*"0" + val
     return val[0:][::-1]   # reverse to make [0]=LSB
 
 

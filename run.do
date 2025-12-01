@@ -3,6 +3,7 @@ set sv_dirs {
     "FULL SYS"
     "CLK Gen"
     "I2C"
+    "I2C_BUS_INTERFACE"
     "LED Controller"
     "TEST Output"
 }

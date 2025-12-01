@@ -79,6 +79,8 @@ task test();
     #1000 write_reg(REG_LEDOUT, 8'hFF);  // Turn LEDs to group mode
     #1000 write_reg(REG_GRPPWM, 8'h20);  // Set group PWM to 12.5%
 
+    //TODO: test more cases?
+    
     // Read registers before & after reset
     read_reg(REG_PWM0);
     read_reg(REG_PWM1);

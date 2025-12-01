@@ -58,7 +58,6 @@ endtask
 
 // Task for reading a register in the LED controller
 // TO DO
-    i2c_stop();
     
     $display("[Read]\t%s\t\tDATA=%b", a.name(), reg_addr, data_read); // display result
 endtask

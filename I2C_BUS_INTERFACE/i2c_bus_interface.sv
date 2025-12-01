@@ -11,6 +11,8 @@ module i2c_bus_interface (
 	// Receive interface to I2C controller(to Mohammad's controller)
 	output logic [7:0] rx_data,  // Received byte
 	output logic rx_valid, // Pulse when byte is ready
+        output logic start_o,
+        output logic stop_o,
 
 	// Transmit interface (from controller)
 	input  logic [7:0] tx_data,  // Byte to send
@@ -36,6 +38,11 @@ module i2c_bus_interface (
 	// START & STOP
 	wire start_cond = (SCL && sda_prev && !SDA); // SDA: 1->0 while SCL=1
 	wire stop_cond  = (SCL && !sda_prev && SDA); // SDA: 0->1 while SCL=1
+
+        //START & STOP OUTPUT
+        assign start_o = start_cond;
+        assign stop_o  = stop_cond;
+
 
 // RECEIVE LOGIC (serial → parallel)
 

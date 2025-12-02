@@ -1,3 +1,5 @@
+import led_driver_pkg::*;
+
 // Main Module
 module led_driver(
     input logic reset,
@@ -5,60 +7,60 @@ module led_driver(
     inout wire  sda,
     output logic [3:0] leds
 );
-    // Intermediate Connections  
-    logic       sleep;      // Sleep bit from MODE register (bit 4)
-    logic       clk_osc;    // internal 400 kHz clock for LED timing
+    //-- Intermediate Connections --
+    logic                   sleep;          // Sleep bit from MODE register (bit 4)
+    logic                   clk_osc;        // internal 400 kHz clock for LED timing
 
-    // Interfaces
+    // Exposed register interface between I2C controller and LED controller
+    logic [ADDR_BITS-1:0]   reg_addr;       // 3-bit address (0x0–0x7)
+    logic [DATA_BITS-1:0]   reg_wdata;      // data to write
+    logic [DATA_BITS-1:0]   reg_rdata;      // data read
+    logic                   reg_write;      // write strobe
+    logic                   reg_read;       // read strobe
+
+    // From I2C bus interface → I2C controller
+    logic [DATA_BITS-1:0]   i2c_byte;       // received I2C byte
+    logic                   i2c_byte_valid; // pulse when a new byte is available
+    
+    // I2C TX-side signals between controller and interface
+    logic [DATA_BITS-1:0]   i2c_tx_data;    // byte to send to master
+    logic                   i2c_tx_req;     // request to send
+    logic                   i2c_tx_ready;   // bit-level ready
+
+    // START/STOP from I2C interface to controller
+    logic                   i2c_start;
+    logic                   i2c_stop;
+    logic                   i2c_transaction_done;
+
+
+    //-- Interfaces --
     global_if   glb(.reset, .sleep);    // Global signal interface for sleep and reset
     bus_if      bus(.clk(clk_osc));     // Data bus between I2C controller & LED controller
 
-    // Power-on-Reset
+
+    //-- Power-on-Reset --
     por_one_cycle u_por (
         .clk       (clk_osc),
         .reset_out (por_reset)
     );
+    
+
     //-- Oscillator --
     oscillator_400K u_osc (
         .glb        (glb),
         .clk_400K   (clk_osc)
     );
 
+
     //-- LED Controller --
     led_controller u_led_ctrl(
         .leds       (leds),
-        .sleep      (sleep),
+        .sleep      (sleep),    // Sleep signal coming out of the mode register
         .clk_400K   (clk_osc),
         .bus        (bus.led_ctrl),
         .glb        (glb)
     );
 
-    // From I2C bus interface → I2C controller
-    logic  [7:0] i2c_byte;       // received I2C byte
-    logic        i2c_byte_valid; // pulse when a new byte is available
-
-    logic   [7:0] tx_data;       // transmiting byte on I2C bus
-    logic         tx_req;        // one-cycle pulse requesting the interface to send tx_data 
-    logic         tx_ready;      // indicates that the I2C interface is ready to accept a new tx_data byte
-    
-    // Register interface between I2C controller and LED controller
-    logic [2:0] reg_addr;        // 3-bit address (0x0–0x7)
-    logic [7:0] reg_wdata;       // data to write
-    logic [7:0] reg_rdata;       // data read
-    logic       reg_write;       // write strobe
-    logic       reg_read;        // read strobe
-
-
-    // I2C TX-side signals between controller and interface
-    logic [7:0] i2c_tx_data;      // byte to send to master
-    logic       i2c_tx_req;       // request to send
-    logic       i2c_tx_ready;     // bit-level ready
-
-    // START/STOP from I2C interface to controller
-    logic       i2c_start;
-    logic       i2c_stop;
-
-    logic       i2c_transaction_done;
 
     //-- I2C --
 

@@ -34,7 +34,6 @@ end
 // Drive bus during read
 assign bus.data = bus.r_en ? read_data : 'z;
 
-//TODO: Make sleep signal an output? How do we pass it into the I2C modules?
 
 //-- Instantiate PWM control modules:
 

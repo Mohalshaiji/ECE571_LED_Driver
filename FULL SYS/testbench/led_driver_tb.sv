@@ -2,7 +2,7 @@ import led_driver_pkg::*;
 
 
 // Testbench for LED Driver (Main Module)
-module led_controller_tb;
+module led_driver_tb;
 
 // Set timescale
 timeunit 1ms;
@@ -173,6 +173,7 @@ endtask
 // Test LED ON output
 task test_on();
     $display("\n-- LEDs On (No PWM) --");
+    #1s;
     write_reg(REG_LEDOUT, 8'h55);       // Turn LEDs to fully on (no PWM)
     #1s;
 endtask
@@ -256,16 +257,16 @@ endtask
 task test_readback();
     $display("\n-- Register Read --");
     // Read PWM registers before & after reset
-    read_reg(REG_PWM0);
-    read_reg(REG_PWM1);
-    read_reg(REG_PWM2);
-    read_reg(REG_PWM3);
+    read_reg(REG_PWM0); #1;
+    read_reg(REG_PWM1); #1;
+    read_reg(REG_PWM2); #1;
+    read_reg(REG_PWM3); #1;
     reset_dut(); 
     #1s;
-    read_reg(REG_PWM0);
-    read_reg(REG_PWM1);
-    read_reg(REG_PWM2);
-    read_reg(REG_PWM3);
+    read_reg(REG_PWM0); #1;
+    read_reg(REG_PWM1); #1;
+    read_reg(REG_PWM2); #1;
+    read_reg(REG_PWM3); #1;
     #1s;
 endtask
 
@@ -306,9 +307,8 @@ end
 // Save the output file
 initial begin
     $dumpfile("wave.vcd");
-    $dumpvars(0, led_controller_tb.__end);
-    $dumpvars(0, led_controller_tb.LEDS);
-    
+    $dumpvars(0, led_driver_tb.__end);
+    $dumpvars(0, led_driver_tb.LEDS);
 end
 
 endmodule

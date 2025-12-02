@@ -21,7 +21,7 @@ from bisect import bisect_left, bisect_right
 # CONFIGURATION
 # ------------------------------------------------------
 VCD_PATH = "wave.vcd"
-LED_SIGNAL = "led_controller_tb.LEDS[3:0]"
+LED_SIGNAL = "led_driver_tb.LEDS[3:0]"
 FPS = 25        # GUI frames per second
 SPEED = 1.0     # 1.0 ~= realtime (just a bit slower)
 # ------------------------------------------------------

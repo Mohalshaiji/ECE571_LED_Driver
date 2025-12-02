@@ -8,13 +8,9 @@ module led_driver(
     // Intermediate Connections  
     logic       sleep;      // Sleep bit from MODE register (bit 4)
     logic       clk_osc;    // internal 400 kHz clock for LED timing
-    logic greset;         // global reset used inside design
-    logic por_reset;      // one-cycle POR pulse
-
-    assign greset = reset | por_reset;  // external reset OR power-on pulse
 
     // Interfaces
-    global_if   glb(.greset, .sleep);    // Global signal interface for sleep and reset
+    global_if   glb(.reset, .sleep);    // Global signal interface for sleep and reset
     bus_if      bus(.clk(clk_osc));     // Data bus between I2C controller & LED controller
 
     // Power-on-Reset
@@ -79,8 +75,8 @@ module led_driver(
         .tx_ready (i2c_tx_ready),
 
         // Exposed START/STOP conditions
-        .start    (i2c_start),
-        .stop     (i2c_stop)
+        .start_o    (i2c_start),
+        .stop_o     (i2c_stop)
     );
 
     // Byte-level I2C controller 

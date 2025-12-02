@@ -39,13 +39,12 @@ module i2c_bus_interface (
 	wire start_cond = (SCL && sda_prev && !SDA); // SDA: 1->0 while SCL=1
 	wire stop_cond  = (SCL && !sda_prev && SDA); // SDA: 0->1 while SCL=1
 
-        //START & STOP OUTPUT
-        assign start_o = start_cond;
-        assign stop_o  = stop_cond;
+    //START & STOP OUTPUT
+    assign start_o = start_cond;
+    assign stop_o  = stop_cond;
 
 
-// RECEIVE LOGIC (serial → parallel)
-
+	// RECEIVE LOGIC (serial → parallel)
 	logic [7:0] shift_reg;
 	logic [2:0] bit_count;
 	logic receiving;
@@ -80,7 +79,7 @@ module i2c_bus_interface (
 	end
 end
 
-// TRANSMIT LOGIC (parallel → serial)
+	// TRANSMIT LOGIC (parallel → serial)
 	logic [7:0] tx_shift;
 	logic [2:0] tx_bit_cnt;
 	logic       sending;
@@ -112,8 +111,8 @@ end
 end
 end
 
-// SDA TRI-STATE (open-drain)
-//Testbench master must release SDA when sending == 1
+	// SDA TRI-STATE (open-drain)
+	//Testbench master must release SDA when sending == 1
 	assign SDA = sending ? tx_shift[7 - tx_bit_cnt] : 1'bz;
 
 endmodule

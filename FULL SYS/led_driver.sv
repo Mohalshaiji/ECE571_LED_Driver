@@ -37,6 +37,10 @@ module led_driver(
     logic  [7:0] i2c_byte;       // received I2C byte
     logic        i2c_byte_valid; // pulse when a new byte is available
 
+    logic   [7:0] tx_data;       // transmiting byte on I2C bus
+    logic         tx_req;        // one-cycle pulse requesting the interface to send tx_data 
+    logic         tx_ready;      // indicates that the I2C interface is ready to accept a new tx_data byte
+    
     // Register interface between I2C controller and LED controller
     logic [2:0] reg_addr;        // 3-bit address (0x0–0x7)
     logic [7:0] reg_wdata;       // data to write

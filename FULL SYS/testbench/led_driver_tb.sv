@@ -2,7 +2,7 @@ import led_driver_pkg::*;
 
 
 // Testbench for LED Driver (Main Module)
-module led_controller_tb;
+module led_driver_tb;
 
 // Set timescale
 timeunit 1ms;
@@ -157,7 +157,7 @@ task write_reg(input reg_enum_t a, input logic [DATA_BITS-1:0] d);
         error_count++;
     end
     else begin
-        $display("[Write-Check PASS]\t%s\taddr=%0d data=%b", a.name(), last_addr, last_data);
+        $display("[Write-Check PASS]\t%s\taddr=%0d\tdata=%b", a.name(), last_addr, last_data);
     end
 
     last_we = 1'b0;
@@ -167,12 +167,18 @@ endtask
 task read_reg(input reg_enum_t a);
     logic [DATA_BITS-1:0] d;
     i2c_read_reg_raw(a, d);
-    $display("[Read]\t%s\t\tDATA=%b", a.name(), d);
+    if (d == DUT.u_led_ctrl.register_file[a])
+        $display("[Read-Check PASS]\t%s\tdata=%b", a.name(), d); 
+    else begin
+        $display("[Read-Check FAIL]\t%s\texpected: data=%b, got: data=%b", a.name(), DUT.u_led_ctrl.register_file[a], d);
+        error_count++;
+    end
 endtask
 
 // Test LED ON output
 task test_on();
     $display("\n-- LEDs On (No PWM) --");
+    #1s;
     write_reg(REG_LEDOUT, 8'h55);       // Turn LEDs to fully on (no PWM)
     #1s;
 endtask
@@ -256,16 +262,20 @@ endtask
 task test_readback();
     $display("\n-- Register Read --");
     // Read PWM registers before & after reset
-    read_reg(REG_PWM0);
-    read_reg(REG_PWM1);
-    read_reg(REG_PWM2);
-    read_reg(REG_PWM3);
+    read_reg(REG_PWM0); #1;
+    read_reg(REG_PWM1); #1;
+    read_reg(REG_PWM2); #1;
+    read_reg(REG_PWM3); #1;
+    read_reg(REG_GRPFREQ); #1;
+    read_reg(REG_GRPPWM); #1;
     reset_dut(); 
     #1s;
-    read_reg(REG_PWM0);
-    read_reg(REG_PWM1);
-    read_reg(REG_PWM2);
-    read_reg(REG_PWM3);
+    read_reg(REG_PWM0); #1;
+    read_reg(REG_PWM1); #1;
+    read_reg(REG_PWM2); #1;
+    read_reg(REG_PWM3); #1;
+    read_reg(REG_GRPFREQ); #1;
+    read_reg(REG_GRPPWM); #1;
     #1s;
 endtask
 
@@ -306,9 +316,8 @@ end
 // Save the output file
 initial begin
     $dumpfile("wave.vcd");
-    $dumpvars(0, led_controller_tb.__end);
-    $dumpvars(0, led_controller_tb.LEDS);
-    
+    $dumpvars(0, led_driver_tb.__end);
+    $dumpvars(0, led_driver_tb.LEDS);
 end
 
 endmodule

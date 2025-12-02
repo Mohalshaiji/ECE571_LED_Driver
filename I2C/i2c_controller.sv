@@ -30,9 +30,14 @@ module i2c_controller #(
     logic [DATA_BITS-1:0]           data_drive;       // Local driver for bus.data
     logic                           read_phase;       // Two-phase read control
 
+    logic 			    sleep_block;
+
+    assign sleep_block = g_if.sleep && (reg_addr_ptr != REG_MODE);
+
     assign bus.data = (bus.w_en) ? data_drive : 'hz; // Drive bus only during writes
 
-    always_ff @(posedge clk) begin
+
+    always_ff @(posedge clk or posedge g_if.reset) begin
         if (g_if.reset) begin
             state             <= CTRL_IDLE;
             dev_addr_latched  <= '0;
@@ -95,7 +100,7 @@ module i2c_controller #(
                     if (rw_bit == 1'b0) begin
                         // Write transaction
                         if (rx_valid) begin
-                            if (addr_match && !g_if.sleep) begin
+                            if (addr_match && !sleep_block) begin
                                 bus.addr          <= reg_addr_ptr;
                                 data_drive        <= rx_data;
                                 bus.w_en          <= 1'b1;
@@ -106,7 +111,7 @@ module i2c_controller #(
                         end
                     end else begin
                         // Read transaction (two-phase to allow bus.data to settle)
-                        if (addr_match && !g_if.sleep) begin
+                        if (addr_match && !sleep_block) begin
                             bus.addr <= reg_addr_ptr;
                             bus.r_en <= 1'b1;
                             if (!read_phase) begin

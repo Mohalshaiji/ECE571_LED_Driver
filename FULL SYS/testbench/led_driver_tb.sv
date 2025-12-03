@@ -1,12 +1,9 @@
+`timescale 1ms/10ns
 import led_driver_pkg::*;
 
 
 // Testbench for LED Driver (Main Module)
 module led_driver_tb;
-
-// Set timescale
-timeunit 1ms;
-timeprecision 10ns;
 
 
 // Declare port connections & interfaces
@@ -88,23 +85,33 @@ task automatic i2c_write_byte(input logic [7:0] data);
         SCL     = 1'b1;
         #T_I2C;
     end
-    // No ACK Cycle
+    SCL = 1'b0; 
+    #T_I2C;
 endtask
 
 task automatic i2c_read_byte(output logic [7:0] data);
     int  i;
     logic bit_val;
     data = '0;
+    
+    // Ensure SCL is Low
+    SCL = 1'b0;
+    
+    // Wait
+    #T_I2C; 
+ 
+    // Release SDA
+    sda_oe = 1'b0;     
+    #T_I2C;
+
     for (i = 7; i >= 0; i--) begin
-        SCL    = 1'b0;
-        sda_oe = 1'b0; // release SDA so slave can drive
-        #T_I2C;
-        SCL    = 1'b1;
-        #T_I2C;
+        SCL = 1'b1;
+        #T_I2C; 
         bit_val = SDA;
-        data[i] = bit_val;
+        data[i] = bit_val;        
+        SCL = 1'b0;
+        #T_I2C;
     end
-    // No ACK/NACK cycle
 endtask
 
 task automatic i2c_write_reg_raw(input reg_enum_t a, input logic [DATA_BITS-1:0] d);

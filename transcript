@@ -1,298 +1,33 @@
-# Compile of oscillator_400K.sv was successful.
-# Compile of led_driver.sv was successful with warnings.
-# Compile of led_driver_pkg.sv was successful.
-# Compile of por_one_cycle.sv was successful.
-# Compile of led_driver_tb.sv was successful.
-# Compile of i2c_controller.sv was successful with warnings.
-# Compile of i2c_pkg.sv was successful.
-# Compile of i2c_bus_interface.sv was successful.
-# Compile of clock_divider.sv was successful.
-# Compile of group_pwm.sv was successful with warnings.
-# Compile of individual_pwm.sv was successful.
-# Compile of individual_pwm_block.sv was successful.
-# Compile of led_controller.sv was successful with warnings.
-# Compile of led_mode_select.sv was successful.
-# Compile of pwm.sv was successful.
-# Compile of variable_clock_divider.sv was successful.
-# 16 compiles, 0 failed with no errors.
-do run.do
+ls
+# CLK Gen                   wlft94rhx4  wlftn16448  
+# ECE571f25_FinalProject    wlft9yr9m7  wlftnfsrkk  
+# FULL SYS                  wlfta544a8  wlftqg02i1  
+# I2C                       wlftakrka6  wlftqgddva  
+# I2C_BUS_INTERFACE         wlftaxr0es  wlftqqnx3t  
+# LED Controller            wlftb8behw  wlftqs8j9m  
+# README.md                 wlftc66gkc  wlftr1n92y  
+# TEST Output               wlftcbrtg8  wlftrqhtn8  
+# ece_571_prj_team1.cr.mti  wlftcqhi6q  wlftrrwdgv  
+# ece_571_prj_team1.mpf     wlftdmsqs1  wlftrv237x  
+# run.do                    wlfte4i5fy  wlftt9h6sk  
+# super_cool_script.py      wlfte7zkai  wlfttk264h  
+# transcript                wlftedgbnh  wlftv5rsdr  
+# vsim.wlf                  wlfteqse1q  wlftv8mbfa  
+# wave.vcd                  wlftfsy5xv  wlftvwic5y  
+# wlft09nvi1                wlftftd7nw  wlftw1043d  
+# wlft1g5qqw                wlftfx2dix  wlftwba01t  
+# wlft2bjh2t                wlftgji018  wlftwyweix  
+# wlft2ktnxc                wlftgnxfz8  wlftx05ev4  
+# wlft4849rz                wlftgwq84e  wlftx69mi3  
+# wlft4fc05c                wlfth1b9ga  wlftxb72ea  
+# wlft4hmds2                wlfthkemd7  wlftxqyw52  
+# wlft4xf05t                wlfthtmi9y  wlfty2jmwz  
+# wlft69h1vr                wlfthwxb52  wlftyvq5fg  
+# wlft6rtdfm                wlfti3iz39  wlftz0n34i  
+# wlft7rdarv                wlftk8mkhy  wlftzj5204  
+# wlft8isb2m                wlftmc3d9j  work        
+ls ECE571f25_FinalProject
 # 
-#     "FULL SYS"
-#     "CLK Gen"
-#     "I2C"
-#     "I2C_BUS_INTERFACE"
-#     "LED Controller"
-#     "TEST Output"
-# 
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:22 on Dec 02,2025
-# vlog -reportprogress 300 -sv FULL SYS/led_driver.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# ** Warning: FULL SYS/led_driver.sv(1): (vlog-13233) Design unit "led_driver_sv_unit" already exists and will be overwritten. Overwriting SystemVerilog $unit with different source files.
-# -- Compiling package led_driver_sv_unit
-# -- Importing package led_driver_pkg
-# -- Compiling module led_driver
-# 
-# Top level modules:
-# 	led_driver
-# End time: 21:59:23 on Dec 02,2025, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 1
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:23 on Dec 02,2025
-# vlog -reportprogress 300 -sv FULL SYS/led_driver_pkg.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# -- Compiling package led_driver_pkg
-# -- Compiling interface bus_if
-# -- Importing package led_driver_pkg
-# -- Compiling interface global_if
-# 
-# Top level modules:
-# 	--none--
-# End time: 21:59:23 on Dec 02,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:23 on Dec 02,2025
-# vlog -reportprogress 300 -sv FULL SYS/por_one_cycle.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# -- Compiling module por_one_cycle
-# 
-# Top level modules:
-# 	por_one_cycle
-# End time: 21:59:23 on Dec 02,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:23 on Dec 02,2025
-# vlog -reportprogress 300 -sv CLK Gen/oscillator_400K.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# -- Compiling module oscillator_400K
-# 
-# Top level modules:
-# 	oscillator_400K
-# End time: 21:59:24 on Dec 02,2025, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:24 on Dec 02,2025
-# vlog -reportprogress 300 -sv I2C/i2c_controller.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# ** Warning: I2C/i2c_controller.sv(2): (vlog-13233) Design unit "i2c_controller_sv_unit" already exists and will be overwritten. Overwriting SystemVerilog $unit with different source files.
-# -- Compiling package i2c_controller_sv_unit
-# -- Importing package led_driver_pkg
-# -- Compiling module i2c_controller
-# 
-# Top level modules:
-# 	i2c_controller
-# End time: 21:59:24 on Dec 02,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 1
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:24 on Dec 02,2025
-# vlog -reportprogress 300 -sv I2C/i2c_pkg.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# -- Compiling package i2c_pkg
-# 
-# Top level modules:
-# 	--none--
-# End time: 21:59:24 on Dec 02,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:24 on Dec 02,2025
-# vlog -reportprogress 300 -sv I2C_BUS_INTERFACE/i2c_bus_interface.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# -- Compiling module i2c_bus_interface
-# 
-# Top level modules:
-# 	i2c_bus_interface
-# End time: 21:59:25 on Dec 02,2025, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:25 on Dec 02,2025
-# vlog -reportprogress 300 -sv LED Controller/clock_divider.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# -- Compiling module clock_divider
-# 
-# Top level modules:
-# 	clock_divider
-# End time: 21:59:25 on Dec 02,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:25 on Dec 02,2025
-# vlog -reportprogress 300 -sv LED Controller/group_pwm.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# ** Warning: LED Controller/group_pwm.sv(1): (vlog-13233) Design unit "group_pwm_sv_unit" already exists and will be overwritten. Overwriting SystemVerilog $unit with different source files.
-# -- Compiling package group_pwm_sv_unit
-# -- Importing package led_driver_pkg
-# -- Compiling module group_pwm
-# 
-# Top level modules:
-# 	group_pwm
-# End time: 21:59:25 on Dec 02,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 1
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:25 on Dec 02,2025
-# vlog -reportprogress 300 -sv LED Controller/individual_pwm.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# -- Compiling module individual_pwm
-# 
-# Top level modules:
-# 	individual_pwm
-# End time: 21:59:26 on Dec 02,2025, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:26 on Dec 02,2025
-# vlog -reportprogress 300 -sv LED Controller/individual_pwm_block.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# -- Compiling module individual_pwm_block
-# 
-# Top level modules:
-# 	individual_pwm_block
-# End time: 21:59:26 on Dec 02,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:26 on Dec 02,2025
-# vlog -reportprogress 300 -sv LED Controller/led_controller.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# ** Warning: LED Controller/led_controller.sv(1): (vlog-13233) Design unit "led_controller_sv_unit" already exists and will be overwritten. Overwriting SystemVerilog $unit with different source files.
-# -- Compiling package led_controller_sv_unit
-# -- Importing package led_driver_pkg
-# -- Compiling module led_controller
-# 
-# Top level modules:
-# 	led_controller
-# End time: 21:59:26 on Dec 02,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 1
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:26 on Dec 02,2025
-# vlog -reportprogress 300 -sv LED Controller/led_mode_select.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# -- Compiling module led_mode_select
-# 
-# Top level modules:
-# 	led_mode_select
-# End time: 21:59:27 on Dec 02,2025, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:27 on Dec 02,2025
-# vlog -reportprogress 300 -sv LED Controller/pwm.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# -- Compiling module pwm
-# 
-# Top level modules:
-# 	pwm
-# End time: 21:59:27 on Dec 02,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# QuestaSim-64 vlog 2025.2_1 Compiler 2025.06 Jun 25 2025
-# Start time: 21:59:27 on Dec 02,2025
-# vlog -reportprogress 300 -sv LED Controller/variable_clock_divider.sv 
-# ** Note: (vlog-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# -- Compiling module variable_clock_divider
-# 
-# Top level modules:
-# 	variable_clock_divider
-# End time: 21:59:27 on Dec 02,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# ** Note: (vsim-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# vsim -voptargs=""+acc"" led_driver_tb 
-# Start time: 21:59:28 on Dec 02,2025
-# ** Note: (vsim-3812) Design is being optimized...
-# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
-# ** Note: (vopt-220) 'S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/ece_571_prj_team1.mpf' is used as the ini file.
-# ** Note: (vopt-143) Recognized 1 FSM in module "i2c_controller(fast)".
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
-# Loading sv_std.std
-# Loading work.led_driver_pkg(fast)
-# Loading work.led_driver_tb_sv_unit(fast)
-# Loading work.led_driver_tb(fast)
-# Loading work.led_driver_sv_unit(fast)
-# Loading work.led_driver(fast)
-# Loading work.global_if(fast__1)
-# Loading work.bus_if(fast__1)
-# Loading work.por_one_cycle(fast)
-# Loading work.oscillator_400K(fast)
-# Loading work.led_controller_sv_unit(fast)
-# Loading work.led_controller(fast)
-# Loading work.clock_divider(fast)
-# Loading work.group_pwm_sv_unit(fast)
-# Loading work.group_pwm(fast)
-# Loading work.clock_divider(fast__1)
-# Loading work.variable_clock_divider(fast)
-# Loading work.pwm(fast)
-# Loading work.individual_pwm_block(fast)
-# Loading work.individual_pwm(fast)
-# Loading work.led_mode_select(fast)
-# Loading work.i2c_bus_interface(fast)
-# Loading work.i2c_controller_sv_unit(fast)
-# Loading work.i2c_controller(fast)
-# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
-#           File in use by: rileycam  Hostname: REMOTELAB04  ProcessID: 13560
-#           Attempting to use alternate WLF file "./wlftb8behw".
-# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlftb8behw
-# [Reset]
-# 
-# === Starting Testcases ===
-# 
-# 
-# -- LEDs On (No PWM) --
-# [Write-Check PASS]	REG_LEDOUT	addr=7	data=01010101
-# 
-# -- Individual PWM --
-# [Write-Check PASS]	REG_LEDOUT	addr=7	data=10101010
-# [Write-Check PASS]	REG_PWM0	addr=1	data=01000000
-# [Write-Check PASS]	REG_PWM1	addr=2	data=10000000
-# [Write-Check PASS]	REG_PWM2	addr=3	data=11000000
-# [Write-Check PASS]	REG_PWM3	addr=4	data=11111111
-# [Write-Check PASS]	REG_PWM0	addr=1	data=10110010
-# [Write-Check PASS]	REG_PWM1	addr=2	data=00000001
-# [Write-Check PASS]	REG_PWM2	addr=3	data=11100111
-# [Write-Check PASS]	REG_PWM3	addr=4	data=00110011
-# 
-# -- Group Dimming --
-# [Write-Check PASS]	REG_LEDOUT	addr=7	data=11111111
-# [Write-Check PASS]	REG_GRPPWM	addr=5	data=11000000
-# [Write-Check PASS]	REG_PWM3	addr=4	data=01000000
-# [Write-Check PASS]	REG_PWM2	addr=3	data=10000000
-# [Write-Check PASS]	REG_PWM1	addr=2	data=11000000
-# [Write-Check PASS]	REG_PWM0	addr=1	data=11111111
-# [Write-Check PASS]	REG_GRPPWM	addr=5	data=00000000
-# [Write-Check PASS]	REG_GRPPWM	addr=5	data=10000000
-# [Write-Check PASS]	REG_GRPPWM	addr=5	data=00110000
-# 
-# -- Group Blinking --
-# [Write-Check PASS]	REG_LEDOUT	addr=7	data=11111111
-# [Write-Check PASS]	REG_MODE	addr=0	data=00001000
-# [Write-Check PASS]	REG_GRPPWM	addr=5	data=10000000
-# [Write-Check PASS]	REG_GRPFREQ	addr=6	data=00010000
-# [Write-Check PASS]	REG_GRPFREQ	addr=6	data=11111111
-# [Write-Check PASS]	REG_MODE	addr=0	data=00000000
-# 
-# -- Sleep --
-# [Write-Check PASS]	REG_LEDOUT	addr=7	data=10101010
-# [Write-Check PASS]	REG_MODE	addr=0	data=00010000
-# [Write-Check PASS]	REG_MODE	addr=0	data=00000000
-# 
-# -- Invert Output --
-# [Write-Check PASS]	REG_LEDOUT	addr=7	data=10101010
-# [Write-Check PASS]	REG_MODE	addr=0	data=00000100
-# [Write-Check PASS]	REG_MODE	addr=0	data=00000000
-# 
-# -- Register Read --
-# [Read-Check PASS]	REG_PWM0	data=11111111
-# [Read-Check PASS]	REG_PWM1	data=11000000
-# [Read-Check PASS]	REG_PWM2	data=10000000
-# [Read-Check PASS]	REG_PWM3	data=01000000
-# [Read-Check PASS]	REG_GRPFREQ	data=11111111
-# [Read-Check PASS]	REG_GRPPWM	data=10000000
-# [Reset]
-# [Read-Check PASS]	REG_PWM0	data=00000000
-# [Read-Check PASS]	REG_PWM1	data=00000000
-# [Read-Check PASS]	REG_PWM2	data=00000000
-# [Read-Check PASS]	REG_PWM3	data=00000000
-# [Read-Check PASS]	REG_GRPFREQ	data=00000000
-# [Read-Check PASS]	REG_GRPPWM	data=00000000
-# 
-# === ALL TESTS PASSED ===
-# ** Note: $finish    : S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/FULL SYS/testbench/led_driver_tb.sv(308)
-#    Time: 52037811 us  Iteration: 0  Instance: /led_driver_tb
-# 1
-# Break in Task test at S:/Documents/ECE-571/final_prj/ECE571_LED_Driver/FULL SYS/testbench/led_driver_tb.sv line 308
-# End time: 22:01:50 on Dec 02,2025, Elapsed time: 0:02:22
-# Errors: 0, Warnings: 5
+# ECE571f25_FinalProject:
+# RTL  SIM  doc                                                
+cd ECE571f25_FinalProject
